@@ -8,20 +8,16 @@ fn main() {
 }
 
 fn solve(input: &str) -> usize {
-    input
+    let value_iter = input
         .split('\n')
         .map(
             |x| x.parse::<i32>().unwrap()
-        )
-        .scan(
-            i32::MAX,
-            |previous, current| {
-                let increased = current > *previous;
-                *previous = current;
-                Some(increased)
-            }
-        )
-        .filter(|increased| *increased)
+        );
+    let mut next_value_iter = value_iter.clone();
+    next_value_iter.next();
+    value_iter
+        .zip(next_value_iter)
+        .filter(|pair| pair.1 > pair.0)
         .count()
 }
 
